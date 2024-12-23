@@ -1,0 +1,23 @@
+#map {
+    height: 600px;
+    width: 100%;
+}
+
+.santa-emoji-icon {
+    font-size: 32px;
+    text-align: center;
+    line-height: 32px;
+    width: 32px;
+    height: 32px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.santa-emoji-icon:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
+}
