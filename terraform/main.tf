@@ -87,7 +87,7 @@ resource "aws_lambda_function" "update_location" {
   role          = aws_iam_role.lambda_role.arn
 
   filename         = "lambda_function.zip"
-  source_code_hash = filebase64sha256("lambda_function.zip")
+  source_code_hash = filebase64sha256("../lambda_function.zip")
 
   timeout     = 30
   memory_size = 128
@@ -160,26 +160,25 @@ resource "aws_amplify_app" "santa_tracker" {
         build:
           commands:
             - echo "Building..."
-            - echo "window.SANTA_TRACKER_API_ENDPOINT='${aws_apigatewayv2_stage.api_stage.invoke_url}/santa';" > env.js
+            - echo "window.SANTA_TRACKER_API_ENDPOINT='${aws_apigatewayv2_stage.api_stage.invoke_url}santa';" > src/env.js
       artifacts:
-        baseDirectory: /
+        baseDirectory: src
         files:
           - '**/*'
-          - env.js
       cache:
         paths: []
   EOT
 
   # 環境変数
   environment_variables = {
-    SANTA_TRACKER_API_ENDPOINT = "${aws_apigatewayv2_stage.api_stage.invoke_url}/santa"
+    SANTA_TRACKER_API_ENDPOINT = "${aws_apigatewayv2_stage.api_stage.invoke_url}santa"
   }
 
   # カスタムルール
   custom_rule {
     source = "/<*>"
-    status = "404"
-    target = "/index.html"
+    status = "200"
+    target = "/<*>"
   }
 }
 
@@ -199,10 +198,10 @@ resource "aws_amplify_branch" "main" {
 # ドメイン設定（オプション）
 resource "aws_amplify_domain_association" "example" {
   app_id      = aws_amplify_app.santa_tracker.id
-  domain_name = "santa-tracker.example.com"
+  domain_name = var.domain_name
 
   sub_domain {
     branch_name = aws_amplify_branch.main.branch_name
-    prefix      = ""
+    prefix      = "www"
   }
 }

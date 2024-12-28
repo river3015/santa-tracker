@@ -1,0 +1,3 @@
+github_repository = "https://github.com/yourusername/santa-tracker"
+github_access_token = "ghp_xxxxxxxxxxxxxxxx"
+domain_name = "yourdomainname.com"
