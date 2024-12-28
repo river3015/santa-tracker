@@ -50,7 +50,7 @@ async function updateSantaLocation() {
         }
 
         // 新しいマーカーを追加（一時的にデフォルトアイコンを使用）
-        marker = L.marker([lat, lng]).addTo(map);
+        marker = L.marker([lat, lng], { icon: santaIcon }).addTo(map);
 
         // タイムスタンプを表示
         const timestamp = new Date(location.timestamp).toLocaleString('ja-JP');
