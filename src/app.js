@@ -18,11 +18,9 @@ const santaIcon = L.icon({
 // サンタの位置を更新する関数
 async function updateSantaLocation() {
     try {
-        // 環境変数からAPIエンドポイントを取得
-        const API_ENDPOINT = window.SANTA_TRACKER_API_ENDPOINT ||
-            (window.location.hostname === 'localhost'
-                ? 'http://localhost:3000/santa'
-                : '/santa');
+        // APIエンドポイントを取得
+        const API_ENDPOINT = window.SANTA_TRACKER_API_ENDPOINT;
+        console.log('API Endpoint:', API_ENDPOINT); // デバッグ用に追加
 
         const response = await fetch(API_ENDPOINT);
         const data = await response.json();
